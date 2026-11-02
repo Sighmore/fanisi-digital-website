@@ -3,7 +3,7 @@ import {Button} from './ui';
 
 const links=[{label:'Our services',href:'/#services'},{label:'Computers',href:'/#computers'},{label:'Websites',href:'/#websites'},{label:'Customer guide',href:'/guides/'},{label:'Contact',href:'/#contact'}];
 function Brand({footer=false}:{footer?:boolean}) {
- return <a href="/" className={`brand ${footer?'brand-footer':'brand-symbol'}`} aria-label="Fanisi Digital home"><img src={footer?'/assets/optimized/logo-full.webp':'/assets/optimized/fd-mark.webp'} alt={footer?'Fanisi Digital — Digital solutions better Business.':'Fanisi Digital FD symbol'} width={footer?640:130} height={footer?213:97}/></a>;
+ return <a href="/" className={`brand ${footer?'brand-footer':'brand-symbol'}`} aria-label="Fanisi Digital home"><img src={footer?'/assets/optimized/logo-full.webp':'/assets/optimized/fd-mark.webp'} srcSet={footer?'/assets/optimized/logo-small.webp 240w, /assets/optimized/logo-full.webp 480w':undefined} sizes={footer?'241px':undefined} loading={footer?'lazy':undefined} alt={footer?'Fanisi Digital — Digital solutions better Business.':'Fanisi Digital FD symbol'} width={footer?480:130} height={footer?160:97}/></a>;
 }
 export function SiteHeader(){return <>
  <div className="topbar"><div className="container"><span><MapPin aria-hidden="true" focusable="false" size={13}/> Nairobi, Kenya · Computers & websites</span><a href="tel:+254114488930"><Phone aria-hidden="true" focusable="false" size={12}/> 0114 488 930</a></div></div>

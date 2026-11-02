@@ -29,3 +29,11 @@ Run `npm run build`, `npm test` and `npm run preview`. Set CHROME_PATH to an ins
 The homepage mobile result is **99, not 100**. No guarantee of a permanent 100 score is made. Hosting, compression, caching, network routing, device resources, browser version and content changes affect results. Google's public PageSpeed test cannot access this localhost preview. Deploy the static `dist/` output with HTTPS, compression and appropriate asset caching, then test the public URL. The development/preview servers intentionally send noindex headers; do not use them as a production host.
 
 Google explains [PageSpeed lab and field data](https://developers.google.com/speed/docs/insights/v5/about) and [score variability](https://developer.chrome.com/docs/lighthouse/performance/performance-scoring). A Lighthouse score is not a search-ranking or AI-citation guarantee.
+
+## 2 November 2026 delivery update
+
+The reported blocking request was the ~9 KB compressed stylesheet. Production prerendering now embeds the complete minified CSS in each HTML document, removing that render-blocking round trip and its HTML-to-CSS dependency. Development still uses Vite CSS delivery. Fonts remain self-hosted and preloaded.
+
+Responsive AVIF photo sources retain WebP fallbacks: laptop 600px is 9,905 bytes (formerly 16,090); workspace 800px is 17,929 bytes (formerly 44,544 for 960px WebP), with 600px/400px alternatives of 12,388/7,199 bytes. Footer logos use 240px/480px WebP variants (3,400/7,652 bytes), are lazy loaded, and retain explicit dimensions.
+
+Verified: zero external stylesheet links on all three production pages; browser-selected AVIF sources; desktop/mobile layout and menu operation; no horizontal overflow at 375px; all 11 regression checks; successful production build. These are dependency and byte-size checks, not a new Google PageSpeed score. The prior Lighthouse measurements above are historical.

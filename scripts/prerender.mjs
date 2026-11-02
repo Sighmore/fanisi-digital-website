@@ -4,11 +4,20 @@ import React from 'react';
 import { renderToString } from 'react-dom/server';
 import {seoHead} from '../src/lib/seo.mjs';
 
-// Deliver the same React page as HTML, then hydrate it in the browser.
+// Render complete HTML at build time; only the small native enhancement script runs in the browser.
 // No browser renderer or extra deployment server is required.
 const server = await createServer({ server: { middlewareMode: true }, appType: 'custom' });
 try {
-  const html = await readFile(new URL('../dist/index.html', import.meta.url), 'utf8');
+  let html = await readFile(new URL('../dist/index.html', import.meta.url), 'utf8');
+  // The complete CSS is only ~9 KB compressed. Inline it to avoid a blocking
+  // HTML -> stylesheet round trip and render fully styled even without JS.
+  const stylesheets = [...html.matchAll(/<link\b[^>]*rel="stylesheet"[^>]*>/g)];
+  for (const [tag] of stylesheets) {
+    const href = tag.match(/href="([^"]+)"/)[1];
+    if (!href.startsWith('/assets/')) throw new Error('Unexpected stylesheet path');
+    const css = await readFile(new URL(`../dist${href}`, import.meta.url), 'utf8');
+    html = html.replace(tag, () => `<style data-fanisi-styles>${css.replace(/<\/style/gi, '<\\/style')}</style>`);
+  }
   if (!html.includes('<div id="root"></div>')) throw new Error('Missing prerender root');
   for(const [route,module] of [['/','App'],['/guides/','GuidePage'],['/privacy/','PrivacyPage']]) {
     const {default:Page}=await server.ssrLoadModule(`/src/${module}.tsx`);
