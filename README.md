@@ -27,8 +27,20 @@ The enquiry form validates name and message, prepares an encoded WhatsApp link a
 
 ## Deployment
 
-The live site is hosted through Sites using `.openai/hosting.json`, with fanisidigital.co.ke connected as its custom domain. GitHub stores the source; pushing here does not automatically deploy the website.
+GitHub Pages hosts the website at https://fanisidigital.co.ke/. The domain remains registered and managed at HostAfrica.
 
-The published runtime is from commit `1304bcab64f14103e7455f80cd6abf88de663a6d` (Site version 4). Release verification is recorded in `docs/live-release-2026-11-23.json`. Subsequent documentation commits do not change the deployed runtime.
+Every push to `main` triggers `.github/workflows/pages.yml`: install dependencies, build all six static pages, run the tests, upload `dist`, and deploy it with GitHub Pages. Manual deployment is also available from Actions. GitHub Pages settings use GitHub Actions as the source and `fanisidigital.co.ke` as the custom domain.
+
+HostAfrica website DNS:
+
+| Name | Type | Value |
+| --- | --- | --- |
+| @ | A | 185.199.108.153 |
+| @ | A | 185.199.109.153 |
+| @ | A | 185.199.110.153 |
+| @ | A | 185.199.111.153 |
+| www | CNAME | sighmore.github.io |
+
+The original Sites deployment manifest is retained for release history. It does not control GitHub Pages hosting. Existing mail and Google verification records are separate from this website configuration.
 
 See `PRODUCT.md` and `DESIGN.md` for product scope and brand design decisions. The AI-generated editorial image is illustrative and does not represent Fanisi staff or a client photograph.
