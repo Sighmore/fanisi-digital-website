@@ -1,0 +1,18 @@
+{
+  "project_id": "appgprj_6ae4db6663508191845a1e479804dc09",
+  "version": 4,
+  "commit_sha": "1304bcab64f14103e7455f80cd6abf88de663a6d",
+  "deployment_id": "appgdep_6b03f012ebe881918aada93ad7f1aba8",
+  "status": "succeeded",
+  "published_at": "2026-11-23T07:49:48Z",
+  "url": "https://fanisidigital.co.ke",
+  "checks": {
+    "tests_passed": 13,
+    "homepage_http_status": 200,
+    "whatsapp_service_http_status": 200,
+    "growth_headline": true,
+    "animations": true,
+    "service_cards": true,
+    "apex_and_www_ssl": "active"
+  }
+}

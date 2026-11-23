@@ -1,37 +1,34 @@
-# Fanisi Digital — business growth redesign
+# Fanisi Digital website
 
-Local review build, 23 November 2026. Nothing in this redesign has been published or pushed to the hosted Site. The existing production website and DNS remain unchanged.
+Live website: https://fanisidigital.co.ke/
 
-## Preview
+Fanisi Digital provides website development, WhatsApp automation and custom CRM solutions for Kenyan businesses. This repository contains the published website source, its static rendering scripts, local assets and automated tests.
 
-Run `npm run build`, then `node node_modules/vite/bin/vite.js preview --host 127.0.0.1 --port 5180`. Open http://127.0.0.1:5180/. The preview sends X-Robots-Tag: noindex, nofollow. For source editing, `npm run dev` uses the React development renderer.
+## Run locally
 
-## Pages
+Requires Node.js 22 or newer.
 
-- `/` — growth-focused homepage and interactive demonstration
-- `/solutions/website-development/`
-- `/solutions/whatsapp-automation/`
-- `/solutions/crm-solutions/`
-- `/guides/` — rewritten business guide
-- `/privacy/`
+```sh
+npm ci
+npm run build
+npm test
+npm run preview -- --port 5180
+```
 
-React renders complete HTML at build time. Production ships a small native interaction script, inline CSS, the existing FD brand mark and locally licensed fonts. No new dependencies.
+For source editing, run `npm run dev`. Preview and development responses include a noindex header; production HTML remains indexable.
 
-## Behaviour
+## Implementation
 
-The enquiry form validates required name and message, accepts an optional business name, prepares an encoded WhatsApp link and leaves sending to the visitor. It does not schedule an appointment or store input. The illustrative demo runs locally on preset sample information, adapts the suggested handoff, and does not connect to WhatsApp or a CRM.
+React and TypeScript render six complete pages at build time. The production site uses a small native browser script for navigation, the interactive sample journey and enquiry preparation. CSS includes the photo zoom, staggered entrances, one-time scroll reveals and reduced-motion support. Fonts and optimized images are hosted locally.
 
-Optional measurement hooks are disabled, with no analytics vendor, storage or network transmission. Details and a proposed baseline are in docs/redesign/MEASUREMENT.md.
+Pages: homepage, three solution pages, business guide and privacy page.
 
-## Review material
+The enquiry form validates name and message, prepares an encoded WhatsApp link and leaves sending to the visitor. It stores no form details. The demonstration uses sample data and connects to neither WhatsApp nor a CRM. Optional measurement hooks are disabled by default.
 
-- PRODUCT.md — positioning, scope and product truth
-- DESIGN.md — extracted exact brand palette and reusable tokens
-- docs/redesign/AUDIT.md — existing-site audit and priorities
-- docs/redesign/HOMEPAGE-COPY.md — complete copy review
-- docs/redesign/REVIEW.md — QA, measured build budgets and outstanding launch decisions
-- docs/redesign/MEASUREMENT.md — consent-gated tracking preparation
+## Deployment
 
-Run `npm test` after a successful build. The tests cover static content, internal links, service/FAQ metadata, removal of sales content, enquiry encoding and demonstration segmentation. Previous source is backed up in releases/redesign-before-2026-11-23.zip. Removed product imagery is preserved outside the website in source-assets/legacy/.
+The live site is hosted through Sites using `.openai/hosting.json`, with fanisidigital.co.ke connected as its custom domain. GitHub stores the source; pushing here does not automatically deploy the website.
 
-A release still requires explicit approval. Keep the existing hosted-source checkout and production manifest separate until that approval is given.
+The published runtime is from commit `1304bcab64f14103e7455f80cd6abf88de663a6d` (Site version 4). Release verification is recorded in `docs/live-release-2026-11-23.json`. Subsequent documentation commits do not change the deployed runtime.
+
+See `PRODUCT.md` and `DESIGN.md` for product scope and brand design decisions. The AI-generated editorial image is illustrative and does not represent Fanisi staff or a client photograph.
