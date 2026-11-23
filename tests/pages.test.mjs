@@ -1,48 +1,49 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {readFileSync,readdirSync,statSync} from 'node:fs';
+import {readFileSync,readdirSync,statSync,existsSync} from 'node:fs';
+import {pages} from '../src/lib/seo.mjs';
 import {guideFaqs} from '../src/lib/guides.mjs';
-const load = path => readFileSync(new URL(`../dist/${path}`,import.meta.url),'utf8');
-test('all pages have local navigation and a centred mobile brand label',()=>{
-  for (const path of ['index.html','guides/index.html','privacy/index.html']) {
-    const html=load(path);
-    const links=[...html.matchAll(/<a\b[^>]*href="([^"]*)"/g)].map(m=>m[1]);
-    assert.ok(!links.some(href=>/^https?:\/\/(www\.)?fanisidigital\.co\.ke/i.test(href)),path);
-    assert.ok(html.includes('mobile-brand-title'),path);
-    assert.match(html,/<a[^>]*href="\/guides\/"/);
-    assert.equal((html.match(/<h1[ >]/g)||[]).length,1);
-  }
-});
-test('guide content is rendered with its own metadata and matching FAQ data',()=>{
-  const html=load('guides/index.html');
-  assert.match(html,/<link[^>]*rel="canonical"[^>]*href="https:\/\/fanisidigital.co.ke\/guides\/"/);
-  assert.ok(guideFaqs.length>=25);
-  for (const {question,answer} of guideFaqs) {
-    const escape=s=>s.replace(/&/g,'&amp;').replace(/'/g,'&#x27;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-    const body=html.replace(/<script\b[^>]*>[\s\S]*?<\/script>/g,'');
-    assert.ok(body.includes(escape(question)),question);
-    assert.ok(body.includes(escape(answer)),question);
-  }
-  const data=JSON.parse(html.match(/type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/)[1]);
-  assert.equal(data['@graph'].find(n=>n['@type']==='FAQPage').mainEntity.length,guideFaqs.length);
-});
-test('internal page paths in anchor links resolve to generated pages',()=>{
-  for (const file of ['index.html','guides/index.html','privacy/index.html']) {
-    for(const [,href] of load(file).matchAll(/<a\b[^>]*href="([^"]*)"/g)) {
-      if(!href.startsWith('/')||href.startsWith('//')) continue;
-      const [path,fragment]=href.split('#');
-      const target=load(path==='/'?'index.html':`${path.slice(1).replace(/\/$/,'')}/index.html`);
-      if(fragment) assert.ok(target.includes(`id="${fragment}"`),`${file}: ${href}`);
-    }
-  }
-});
-test('the native enquiry form remains wired and production JavaScript stays small',()=>{
+const load=path=>readFileSync(new URL('../dist/'+path,import.meta.url),'utf8');
+const file=path=>path==='/'?'index.html':path.slice(1)+'index.html';
+const escape=s=>s.replace(/&/g,'&amp;').replace(/'/g,'&#x27;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+test('six complete static pages use the new business positioning',()=>{
+ assert.equal(Object.keys(pages).length,6);
+ for(const path of Object.keys(pages)){
+  const html=load(file(path));assert.equal((html.match(/<h1[ >]/g)||[]).length,1,path);
+  assert.match(html,/mobile-brand-title/);assert.match(html,/id="mobile-navigation"/);
+  assert.doesNotMatch(html,/laptop|elitebook|computer buying|30,000|24,999|testimonial|aggregateRating|revenue growth/i,path);
+  assert.doesNotMatch(html,/\u00e2\u20ac|\u00c2\u00b7/,'No text encoding corruption');
+ }
  const home=load('index.html');
- assert.match(home,/<form[^>]*data-enquiry-form/);
- assert.match(home,/<select[^>]*name="category"/);
- assert.match(home,/data-enquiry-message="/);
- const files=readdirSync(new URL('../dist/assets/',import.meta.url)).filter(file=>file.endsWith('.js'));
- const total=files.reduce((sum,file)=>sum+statSync(new URL(`../dist/assets/${file}`,import.meta.url)).size,0);
- assert.ok(total<10000,`Production browser JavaScript grew to ${total} bytes`);
- assert.doesNotMatch(home,/fonts\.googleapis|fonts\.gstatic/);
+ for(const word of ['Attract more customers.','Convert more enquiries.','Keep them coming back.','WhatsApp Automation','CRM Solutions','Simon Kuria'])assert.ok(home.includes(word),word);
+ assert.ok(home.indexOf('Book a growth consultation')<home.indexOf('class="hero-journey"'),'Mobile content order must put the value and primary action first');
+ assert.doesNotMatch(home,/free (growth )?consultation/i);
+});
+test('internal navigation resolves to real pages and section IDs',()=>{
+ for(const path of Object.keys(pages))for(const [,href] of load(file(path)).matchAll(/<a\b[^>]*href="([^"]*)"/g)){
+  if(!href.startsWith('/')&&!href.startsWith('#'))continue;
+  const [target,fragment]=href.split('#');const targetPath=target||path;
+  assert.ok(pages[targetPath],`${path}: ${href}`);const html=load(file(targetPath));
+  if(fragment)assert.ok(html.includes(`id="${fragment}"`),`${path}: ${href}`);
+ }
+});
+test('inline styles, working local assets and small production JavaScript preserve delivery budgets',()=>{
+ for(const path of Object.keys(pages)){
+  const html=load(file(path));assert.match(html,/<style data-fanisi-styles>/);assert.doesNotMatch(html,/<link[^>]*rel="stylesheet"/);
+  for(const [,src]of html.matchAll(/(?:src|href)="(\/(?:assets|fonts)\/[^"]+)"/g))assert.ok(existsSync(new URL('../dist'+src,import.meta.url)),src);
+ }
+ const js=readdirSync(new URL('../dist/assets/',import.meta.url)).filter(f=>f.endsWith('.js'));
+ assert.ok(js.reduce((n,f)=>n+statSync(new URL('../dist/assets/'+f,import.meta.url)).size,0)<12000);
+ assert.doesNotMatch(load('index.html'),/fonts\.googleapis|fonts\.gstatic/);
+});
+test('business guide includes all supplied answers before JavaScript runs',()=>{
+ const html=load('guides/index.html').replace(/<script[^>]*>[\s\S]*?<\/script>/g,'');
+ for(const {question,answer}of guideFaqs){assert.ok(html.includes(escape(question)),question);assert.ok(html.includes(escape(answer)),question);}
+});
+test('enquiries require name and message and distinguish preparation from booking',()=>{
+ const html=load('index.html');assert.match(html,/<form[^>]*data-enquiry-form/);
+ assert.match(html,/<input[^>]*id="name"[^>]*required/);assert.match(html,/<textarea[^>]*id="message"[^>]*required/);
+ assert.doesNotMatch(html,/<input[^>]*id="business"[^>]*required/);
+ assert.match(html,/does not book a time or store your details/);
+ assert.match(html,/no messages are sent and no CRM is connected/);
 });

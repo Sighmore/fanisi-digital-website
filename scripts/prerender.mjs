@@ -2,7 +2,7 @@ import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { createServer } from 'vite';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
-import {seoHead} from '../src/lib/seo.mjs';
+import {seoHead,pages} from '../src/lib/seo.mjs';
 
 // Render complete HTML at build time; only the small native enhancement script runs in the browser.
 // No browser renderer or extra deployment server is required.
@@ -19,9 +19,10 @@ try {
     html = html.replace(tag, () => `<style data-fanisi-styles>${css.replace(/<\/style/gi, '<\\/style')}</style>`);
   }
   if (!html.includes('<div id="root"></div>')) throw new Error('Missing prerender root');
-  for(const [route,module] of [['/','App'],['/guides/','GuidePage'],['/privacy/','PrivacyPage']]) {
+  for(const route of Object.keys(pages)) {
+    const module=route==='/guides/'?'GuidePage':route==='/privacy/'?'PrivacyPage':route.startsWith('/solutions/')?'ServicePage':'App';
     const {default:Page}=await server.ssrLoadModule(`/src/${module}.tsx`);
-    const markup=renderToString(React.createElement(React.StrictMode,null,React.createElement(Page)));
+    const markup=renderToString(React.createElement(React.StrictMode,null,React.createElement(Page,route.startsWith('/solutions/')?{slug:route.split('/')[2]}:{})));
     const target=new URL(`../dist${route}`,import.meta.url);
     await mkdir(target,{recursive:true});
     const document=html.replace(/<!--fanisi-seo-start-->[\s\S]*?<!--fanisi-seo-end-->/,()=>seoHead(true,route)).replace('<div id="root"></div>',()=>`<div id="root">${markup}</div>`);

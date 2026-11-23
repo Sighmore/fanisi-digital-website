@@ -1,32 +1,37 @@
-# Fanisi Digital
+# Fanisi Digital — business growth redesign
 
-React + TypeScript + Vite, Tailwind CSS 4, and shadcn-style components built on Radix primitives.
+Local review build, 23 November 2026. Nothing in this redesign has been published or pushed to the hosted Site. The existing production website and DNS remain unchanged.
 
-## Run locally
+## Preview
 
-```sh
-npm install
-npm run dev
-```
+Run `npm run build`, then `node node_modules/vite/bin/vite.js preview --host 127.0.0.1 --port 5180`. Open http://127.0.0.1:5180/. The preview sends X-Robots-Tag: noindex, nofollow. For source editing, `npm run dev` uses the React development renderer.
 
-Use the URL printed by Vite. `npm run build` creates `dist/`; `npm test` checks required enquiry fields and WhatsApp message encoding.
+## Pages
 
-## Content and behavior
+- `/` — growth-focused homepage and interactive demonstration
+- `/solutions/website-development/`
+- `/solutions/whatsapp-automation/`
+- `/solutions/crm-solutions/`
+- `/guides/` — rewritten business guide
+- `/privacy/`
 
-Business content is supplied by the owner. The single featured HP EliteBook is an illustrative KSh 30,000 selection; Fanisi must confirm availability and condition. There is no checkout, inventory system, analytics or form storage. The form opens WhatsApp with a prepared message; the visitor sends it themselves. All customer navigation is local: /, /guides/ and /privacy/, plus homepage sections. Canonical URLs identify the intended production domain without sending visitors to the old site.
+React renders complete HTML at build time. Production ships a small native interaction script, inline CSS, the existing FD brand mark and locally licensed fonts. No new dependencies.
 
-## Assets
+## Behaviour
 
-- `public/assets/workspace-hero.png`: generated using the built-in imagegen tool. Prompt: “A refined real sunlit creative workspace: an open silver business laptop on a warm ivory desk, a cobalt blue ceramic cup, small notebook, subtle leafy plant, warm off-white wall, soft daylight and natural shadows. Three-quarter view at desk height, laptop sits on right half, generous negative space on left. Calm professional welcoming aesthetic, premium architectural magazine photography, realistic materials. Laptop screen shows a simple abstract blue and cream website layout with no legible text. No people, no logos, no text, no watermarks. Wide 3:2 composition.” Illustrative editorial image, not the featured unit.
-- `public/assets/elitebook-840-g5.png`: product reference photograph from https://upsbatterycity.com/product/hp-elitebook-840-g5-intel-core-i5-8th-6f . Listing verified at KSh 30,000 on 30 October 2026. Retailer image is for local design reference; replace with Fanisi's own product photograph or obtain reuse rights before public publication.
+The enquiry form validates required name and message, accepts an optional business name, prepares an encoded WhatsApp link and leaves sending to the visitor. It does not schedule an appointment or store input. The illustrative demo runs locally on preset sample information, adapts the suggested handoff, and does not connect to WhatsApp or a CRM.
 
-No public deployment was performed.
+Optional measurement hooks are disabled, with no analytics vendor, storage or network transmission. Details and a proposed baseline are in docs/redesign/MEASUREMENT.md.
 
-## Search and AI discovery
+## Review material
 
-`npm run build` now prerenders the homepage into `dist/index.html`, and generates /guides/ and /privacy/, so content is readable without JavaScript. `npm test` includes built-artifact SEO checks: run the build first after edits. Metadata, business identity and FAQ copy share `src/lib/seo.mjs`. Native details/summary controls keep FAQ answers in the source HTML. React renders pages at build time; production uses a lightweight TypeScript interaction script rather than hydrating the whole page.
+- PRODUCT.md — positioning, scope and product truth
+- DESIGN.md — extracted exact brand palette and reusable tokens
+- docs/redesign/AUDIT.md — existing-site audit and priorities
+- docs/redesign/HOMEPAGE-COPY.md — complete copy review
+- docs/redesign/REVIEW.md — QA, measured build budgets and outstanding launch decisions
+- docs/redesign/MEASUREMENT.md — consent-gated tracking preparation
 
-The development and preview servers deliberately return `X-Robots-Tag: noindex, nofollow`; the production artifact contains indexable metadata. Deploy dist/ through a production static host rather than using the preview server publicly. Preserve existing Fanisi service/guide/privacy routes and merge sitemap entries with the existing site. See SEO-RESEARCH.md for competitor references, implementation decisions and launch requirements. No rankings, indexing, AI citations or rich results have been verified or promised.
+Run `npm test` after a successful build. The tests cover static content, internal links, service/FAQ metadata, removal of sales content, enquiry encoding and demonstration segmentation. Previous source is backed up in releases/redesign-before-2026-11-23.zip. Removed product imagery is preserved outside the website in source-assets/legacy/.
 
-The current visual reference is Ecommelogic. Typography and section composition were adapted to Fanisi’s own branding; no competitor assets, testimonials or discounts were imported.
-
+A release still requires explicit approval. Keep the existing hosted-source checkout and production manifest separate until that approval is given.
