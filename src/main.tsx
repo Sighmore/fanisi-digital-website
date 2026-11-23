@@ -9,7 +9,7 @@ function wireInteractions(){
  // One-time marketing entrances; forms and demonstration controls stay still.
  const motionPreference=window.matchMedia('(prefers-reduced-motion: reduce)');
  if(!motionPreference.matches && 'IntersectionObserver' in window){
-  const elements=document.querySelectorAll<HTMLElement>('.section-heading,.transformation,.journey-rail li,.principles article,.about-grid,.engagement,.problem-grid>div');
+  const elements=document.querySelectorAll<HTMLElement>('.section-heading,.transformation,.journey-rail li,.principles article,.about-grid,.engagement,.problem-grid>div,.client-project,.client-feedback');
   const observer=new IntersectionObserver(entries=>{for(const entry of entries){if(entry.isIntersecting){entry.target.classList.add('is-visible');observer.unobserve(entry.target);}}},{threshold:0.08,rootMargin:'0px 0px -24px 0px'});
   elements.forEach(el=>{if(el.getBoundingClientRect().top>window.innerHeight){el.classList.add('scroll-reveal');observer.observe(el);}});
   const showAll=()=>{if(motionPreference.matches){elements.forEach(el=>el.classList.add('is-visible'));observer.disconnect();}};

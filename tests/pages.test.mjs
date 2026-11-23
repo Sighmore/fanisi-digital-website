@@ -11,11 +11,11 @@ test('six complete static pages use the new business positioning',()=>{
  for(const path of Object.keys(pages)){
   const html=load(file(path));assert.equal((html.match(/<h1[ >]/g)||[]).length,1,path);
   assert.match(html,/mobile-brand-title/);assert.match(html,/id="mobile-navigation"/);
-  assert.doesNotMatch(html,/laptop|elitebook|computer buying|30,000|24,999|testimonial|aggregateRating|revenue growth/i,path);
+  assert.doesNotMatch(html,/laptop|elitebook|computer buying|30,000|24,999|aggregateRating|revenue growth/i,path);
   assert.doesNotMatch(html,/\u00e2\u20ac|\u00c2\u00b7/,'No text encoding corruption');
  }
  const home=load('index.html');
- for(const word of ['Attract more customers.','Convert more enquiries.','Keep them coming back.','WhatsApp Automation','CRM Solutions','Simon Kuria'])assert.ok(home.includes(word),word);
+ for(const word of ['Attract more customers.','Convert more enquiries.','Keep them coming back.','WhatsApp Automation','CRM Solutions','Simon Kuria','Coach Lincolyn','Lincolyn Wekesa'])assert.ok(home.includes(word),word);
  assert.ok(home.indexOf('Book a growth consultation')<home.indexOf('class="hero-journey"'),'Mobile content order must put the value and primary action first');
  assert.doesNotMatch(home,/free (growth )?consultation/i);
 });

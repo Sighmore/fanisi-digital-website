@@ -11,3 +11,8 @@ Conversion: consultation enquiry prepares a WhatsApp message for visitor review 
 Demonstration: preset sample customer needs, timeline, readiness and budget context update a browser-only sample opportunity. No real messages, customer records or system integrations. No invented client logos, case studies, revenue figures, testimonials or performance improvements. Third-party compatibility and platform requirements must be established before implementation.
 
 Architecture: React/TypeScript authoring, Vite/Tailwind build, static HTML for six routes; small native JS for navigation, form, demo and disabled measurement hooks. Preserve this lightweight architecture.
+
+
+## Approved client project
+
+The user identified coachlincolyn.co.ke as a Fanisi-built website and supplied qualitative feedback for Lincolyn Wekesa, golf coach: easier discovery and access to his services. The homepage portfolio entry uses that feedback and features observed on the public site: junior/adult coaching, class/bundle options, WhatsApp booking requests, FAQs and a product catalogue with WhatsApp enquiries. No numerical results, ratings, payment capabilities or guaranteed bookings are claimed. The testimonial is a concise rewrite of the supplied feedback, not an independently collected review.

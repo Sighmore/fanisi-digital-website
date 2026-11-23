@@ -18,3 +18,9 @@ for(const width of [640,960]){
  await sharp('source-assets/business-planning-v1.png').resize({width}).avif({quality:46,effort:5}).toFile(`public/assets/optimized/business-planning-${width}.avif`);
  await sharp('source-assets/business-planning-v1.png').resize({width}).webp({quality:76}).toFile(`public/assets/optimized/business-planning-${width}.webp`);
 }
+
+// Real client website screenshot captured for the approved portfolio entry.
+for(const width of [640,960]){
+ await sharp('source-assets/coach-lincolyn-website.jpg').resize({width}).avif({quality:58,effort:5}).toFile(`public/assets/optimized/coach-lincolyn-${width}.avif`);
+ await sharp('source-assets/coach-lincolyn-website.jpg').resize({width}).webp({quality:82}).toFile(`public/assets/optimized/coach-lincolyn-${width}.webp`);
+}
