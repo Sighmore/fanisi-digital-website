@@ -16,3 +16,8 @@ Architecture: React/TypeScript authoring, Vite/Tailwind build, static HTML for s
 ## Approved client project
 
 The user identified coachlincolyn.co.ke as a Fanisi-built website and supplied qualitative feedback for Lincolyn Wekesa, golf coach: easier discovery and access to his services. The homepage portfolio entry uses that feedback and features observed on the public site: junior/adult coaching, class/bundle options, WhatsApp booking requests, FAQs and a product catalogue with WhatsApp enquiries. No numerical results, ratings, payment capabilities or guaranteed bookings are claimed. The testimonial is a concise rewrite of the supplied feedback, not an independently collected review.
+
+
+## Multi-page navigation
+
+Home, Solutions, Our Work, About and Contact are separate prerendered pages. Existing service, guide and privacy pages remain. The compact Coach Lincolyn project and illustrative demo live on /our-work/; the enquiry form is on /contact/. Service enquiry links preserve the selected category through a fixed, validated service query parameter. Floating controls open WhatsApp (visitor chooses to send) or a native quick-help popover with service, FAQ and contact links. Quick help is navigation assistance, not a live AI agent. Motion uses the existing reveal/entrance system and reduced-motion support.

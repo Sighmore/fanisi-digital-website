@@ -10,7 +10,7 @@ test('metadata identifies each service and retains the canonical domain',()=>{
   assert.ok(html.includes(`rel="canonical" href="https://fanisidigital.co.ke${path}"`));
   assert.doesNotMatch(html,/localhost|127\.0\.0\.1/);
  }
- assert.equal(titles.size,6);
+ assert.equal(titles.size,10);
 });
 test('structured data claims match actual services and visible FAQs',()=>{
  for(const path of Object.keys(pages)){
@@ -23,7 +23,7 @@ test('structured data claims match actual services and visible FAQs',()=>{
  }
 });
 test('sitemap advertises exactly the implemented pages',()=>{
- const sitemap=readFileSync(new URL('../dist/sitemap.xml',import.meta.url),'utf8');assert.equal((sitemap.match(/<loc>/g)||[]).length,6);
+ const sitemap=readFileSync(new URL('../dist/sitemap.xml',import.meta.url),'utf8');assert.equal((sitemap.match(/<loc>/g)||[]).length,10);
  for(const path of Object.keys(pages))assert.ok(sitemap.includes(`<loc>https://fanisidigital.co.ke${path}</loc>`));
  const llms=readFileSync(new URL('../dist/llms.txt',import.meta.url),'utf8');assert.doesNotMatch(llms,/laptop|elitebook|computer buying/i);
 });

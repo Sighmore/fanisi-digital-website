@@ -20,9 +20,9 @@ try {
   }
   if (!html.includes('<div id="root"></div>')) throw new Error('Missing prerender root');
   for(const route of Object.keys(pages)) {
-    const module=route==='/guides/'?'GuidePage':route==='/privacy/'?'PrivacyPage':route.startsWith('/solutions/')?'ServicePage':'App';
+    const module={'/':'App','/guides/':'GuidePage','/privacy/':'PrivacyPage','/solutions/':'SolutionsPage','/our-work/':'WorkPage','/about/':'AboutPage','/contact/':'ContactPage'}[route]||'ServicePage';
     const {default:Page}=await server.ssrLoadModule(`/src/${module}.tsx`);
-    const markup=renderToString(React.createElement(React.StrictMode,null,React.createElement(Page,route.startsWith('/solutions/')?{slug:route.split('/')[2]}:{})));
+    const markup=renderToString(React.createElement(React.StrictMode,null,React.createElement(Page,module==='ServicePage'?{slug:route.split('/')[2]}:{})));
     const target=new URL(`../dist${route}`,import.meta.url);
     await mkdir(target,{recursive:true});
     const document=html.replace(/<!--fanisi-seo-start-->[\s\S]*?<!--fanisi-seo-end-->/,()=>seoHead(true,route)).replace('<div id="root"></div>',()=>`<div id="root">${markup}</div>`);

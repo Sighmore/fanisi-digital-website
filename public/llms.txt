@@ -3,6 +3,10 @@
 Fanisi Digital is based in Nairobi, Kenya. It provides strategic website development, intelligent WhatsApp automation and custom CRM/customer retention systems. Its customer journey is Attract → Engage → Convert → Retain.
 
 - Homepage: https://fanisidigital.co.ke/
+- Solutions: https://fanisidigital.co.ke/solutions/
+- Our work: https://fanisidigital.co.ke/our-work/
+- About: https://fanisidigital.co.ke/about/
+- Contact: https://fanisidigital.co.ke/contact/
 - Website development: https://fanisidigital.co.ke/solutions/website-development/
 - WhatsApp automation: https://fanisidigital.co.ke/solutions/whatsapp-automation/
 - CRM solutions: https://fanisidigital.co.ke/solutions/crm-solutions/

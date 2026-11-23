@@ -1,0 +1,3 @@
+import {ConsultationLink} from './GrowthComponents';
+export function PageIntro({label,title,intro}:{label:string,title:string,intro:string}){return <section className="page-intro"><div className="container"><nav className="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span>/</span><span>{label}</span></nav><span className="section-kicker">FANISI DIGITAL · {label.toUpperCase()}</span><h1>{title}</h1><p>{intro}</p></div></section>}
+export function PageCallToAction(){return <section className="page-cta"><div className="container"><div><h2>Let’s talk about your business.</h2><p>Start with the opportunity you want to unlock.</p></div><ConsultationLink placement="page-footer"/></div></section>}

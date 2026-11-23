@@ -19,9 +19,9 @@ For source editing, run `npm run dev`. Preview and development responses include
 
 ## Implementation
 
-React and TypeScript render six complete pages at build time. The production site uses a small native browser script for navigation, the interactive sample journey and enquiry preparation. CSS includes the photo zoom, staggered entrances, one-time scroll reveals and reduced-motion support. Fonts and optimized images are hosted locally.
+React and TypeScript render ten complete pages at build time. The production site uses a small native browser script for navigation, the interactive sample journey and enquiry preparation. CSS includes the photo zoom, staggered entrances, one-time scroll reveals and reduced-motion support. Fonts and optimized images are hosted locally.
 
-Pages: homepage, three solution pages, business guide and privacy page.
+Pages: Home, Solutions, Our Work, About, Contact, three individual service pages, business guide and privacy. Main navigation uses separate URLs; the enquiry form lives on /contact/. Floating shortcuts provide WhatsApp and native quick help on every page.
 
 The enquiry form validates name and message, prepares an encoded WhatsApp link and leaves sending to the visitor. It stores no form details. The demonstration uses sample data and connects to neither WhatsApp nor a CRM. Optional measurement hooks are disabled by default.
 

@@ -3,6 +3,10 @@ import {services} from './services.mjs';
 export const site={url:'https://fanisidigital.co.ke/',name:'Fanisi Digital',title:'Websites, WhatsApp Automation & CRM in Kenya | Fanisi Digital',description:'Connected digital solutions for Kenyan businesses: strategic websites, WhatsApp lead qualification and custom CRM systems. Attract, engage, convert and retain customers.',telephone:'+254114488930',email:'fanisidigital@gmail.com'};
 export const pages={
  '/':{title:site.title,description:site.description,label:'Home'},
+ '/solutions/':{title:'Digital Solutions for Kenyan Businesses | Fanisi Digital',description:'Explore website development, WhatsApp automation and CRM solutions designed around your customer journey.',label:'Solutions'},
+ '/our-work/':{title:'Our Work & Client Projects | Fanisi Digital',description:'Explore the Coach Lincolyn website built by Fanisi Digital and try an interactive demonstration of a connected customer journey.',label:'Our work'},
+ '/about/':{title:'About Fanisi Digital | Connected Business Solutions in Kenya',description:'Learn how Fanisi Digital connects websites, customer conversations and relationship management around your business.',label:'About'},
+ '/contact/':{title:'Contact Fanisi Digital | Speak with Simon Kuria',description:'Discuss your website, WhatsApp enquiries or customer follow-up with Simon Kuria in Nairobi. Prepare an enquiry or contact Fanisi directly.',label:'Contact'},
  '/guides/':{title:'Business Websites, WhatsApp & CRM Questions | Fanisi Digital',description:'Practical answers about choosing a business website, WhatsApp automation, lead qualification and CRM solutions in Kenya.',label:'Business guide'},
  '/privacy/':{title:'Privacy & Your Information | Fanisi Digital',description:'Understand the Fanisi Digital enquiry form, sample demonstration and information handling before contacting us.',label:'Privacy'},
  ...Object.fromEntries(services.map(s=>[`/solutions/${s.slug}/`,{title:`${s.name} in Kenya | Fanisi Digital`,description:s.intro,label:s.name}]))

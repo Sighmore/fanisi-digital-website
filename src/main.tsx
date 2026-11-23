@@ -9,7 +9,7 @@ function wireInteractions(){
  // One-time marketing entrances; forms and demonstration controls stay still.
  const motionPreference=window.matchMedia('(prefers-reduced-motion: reduce)');
  if(!motionPreference.matches && 'IntersectionObserver' in window){
-  const elements=document.querySelectorAll<HTMLElement>('.section-heading,.transformation,.journey-rail li,.principles article,.about-grid,.engagement,.problem-grid>div,.client-project,.client-feedback');
+  const elements=document.querySelectorAll<HTMLElement>('.section-heading,.transformation,.journey-rail li,.principles article,.about-grid,.engagement,.problem-grid>div,.client-project,.client-feedback,.home-service-grid article');
   const observer=new IntersectionObserver(entries=>{for(const entry of entries){if(entry.isIntersecting){entry.target.classList.add('is-visible');observer.unobserve(entry.target);}}},{threshold:0.08,rootMargin:'0px 0px -24px 0px'});
   elements.forEach(el=>{if(el.getBoundingClientRect().top>window.innerHeight){el.classList.add('scroll-reveal');observer.observe(el);}});
   const showAll=()=>{if(motionPreference.matches){elements.forEach(el=>el.classList.add('is-visible'));observer.disconnect();}};
@@ -31,6 +31,10 @@ function wireInteractions(){
  document.querySelectorAll<HTMLElement>('[data-track]').forEach(el=>el.addEventListener('click',()=>measure(el.dataset.track||'cta_click',el.dataset.placement||'page')));
  const form=document.querySelector<HTMLFormElement>('[data-enquiry-form]');
  const status=form?.querySelector<HTMLElement>('[role=status]');
+ const enquiryCategories:Record<string,string>={'website-development':'Website Development','whatsapp-automation':'WhatsApp Automation','crm-solutions':'CRM Solutions'};
+ const requestedService=new URLSearchParams(location.search).get('service')||'';
+ const category=form?.querySelector<HTMLSelectElement>('[name=category]');
+ if(category&&enquiryCategories[requestedService])category.value=enquiryCategories[requestedService];
  form?.addEventListener('submit',event=>{
   event.preventDefault();const data=new FormData(form);
   try{
